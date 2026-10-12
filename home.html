@@ -32,7 +32,7 @@
         .btn-primary:hover { box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }
         .btn-outline { background: transparent; border: 1px solid var(--cyber-green); color: var(--cyber-green); }
         .btn-outline:hover { background: var(--cyber-green); color: #000; }
-        .secret-admin-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; opacity: 0.6; transition: 0.3s; }
+        .secret-admin-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; opacity: 0.5; transition: 0.3s; }
         .secret-admin-btn:hover { opacity: 1; color: var(--cyber-cyan); }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem 3rem; width: 100%; }
@@ -82,22 +82,30 @@
         .review-text { color: var(--text-muted); font-size: 0.88rem; font-style: italic; margin-bottom: 0.6rem; line-height: 1.5; }
         .review-user { font-weight: bold; color: var(--text-main); font-size: 0.85rem; }
 
-        /* Modal Popup */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; padding: 1rem; backdrop-filter: blur(4px); }
-        .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; width: 100%; max-width: 460px; padding: 1.8rem; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-btn { position: absolute; top: 1rem; right: 1rem; color: var(--text-muted); cursor: pointer; font-size: 1.4rem; }
+        /* Modal & Player UI */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); z-index: 100; justify-content: center; align-items: center; padding: 1rem; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; width: 100%; max-width: 520px; padding: 1.8rem; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-large { max-width: 850px; }
+        .close-btn { position: absolute; top: 1rem; right: 1rem; color: var(--text-muted); cursor: pointer; font-size: 1.4rem; z-index: 10; }
         .close-btn:hover { color: var(--danger); }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.7rem; border-radius: 6px; background: var(--bg-dark); border: 1px solid var(--border-color); color: #fff; font-size: 0.9rem; }
-        .form-group input:focus, .form-group textarea:focus { border-color: var(--cyber-green); outline: none; }
+
+        /* Video Player Dashboard Styling */
+        .player-layout { display: grid; grid-template-columns: 1fr 260px; gap: 1.2rem; margin-top: 1rem; }
+        @media(max-width: 768px) { .player-layout { grid-template-columns: 1fr; } }
+        .video-box { background: #000; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9; position: relative; }
+        .video-box iframe, .video-box video { width: 100%; height: 100%; border: none; }
+        .lesson-list { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.8rem; max-height: 380px; overflow-y: auto; }
+        .lesson-item { padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid transparent; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.85rem; transition: 0.3s; display: flex; justify-content: space-between; }
+        .lesson-item:hover, .lesson-item.active { background: rgba(0, 255, 102, 0.1); border-color: var(--cyber-green); color: var(--cyber-green); }
 
         footer { background-color: var(--bg-card); border-top: 1px solid var(--border-color); text-align: center; padding: 1.5rem; margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo" onclick="location.reload()">🛡️ সাইবার সিকিউরিটি একাডেমি BD</div>
@@ -105,14 +113,13 @@
                 <span class="nav-link" onclick="location.reload()">হোম</span>
                 <span class="nav-link" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">কোর্সসমূহ</span>
                 <span class="nav-link" onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">রিভিউ</span>
-                <button class="secret-admin-btn" onclick="openAdminModal()" title="এডমিন লগইন">🔒 এডমিন</button>
+                <button class="secret-admin-btn" onclick="openAdminModal()">⚙️ এডমিন</button>
                 <div id="authContainer" style="display:inline-flex; gap:0.5rem; align-items:center;"></div>
             </div>
         </div>
     </nav>
 
     <div class="container">
-        <!-- Hero Banner with Stats -->
         <section class="hero">
             <span class="hero-badge">বাংলাদেশের সেরা অনলাইন সাইবার সিকিউরিটি লার্নিং প্ল্যাটফর্ম</span>
             <h1>আপনার সাইবার সিকিউরিটি ক্যারিয়ার <span>শুরু হোক এখান থেকেই</span></h1>
@@ -126,7 +133,6 @@
             </div>
         </section>
 
-        <!-- Courses Listing -->
         <section id="courses">
             <div class="section-header">
                 <h2 class="section-title">আমাদের জনপ্রিয় কোর্সসমূহ</h2>
@@ -141,7 +147,6 @@
             <div class="grid" id="courseGrid"></div>
         </section>
 
-        <!-- Customer Reviews -->
         <section id="reviews" class="reviews-section">
             <div class="section-header">
                 <h2 class="section-title">শিক্ষার্থীদের রিভিউ ও মতামত</h2>
@@ -160,7 +165,7 @@
                     <div class="review-content">
                         <div class="rating">★★★★★</div>
                         <p class="review-text">"ইথিক্যাল হ্যাকিং জিরো টু হিরো কোর্সটি আমার ক্যারিয়ার সম্পূর্ণ বদলে দিয়েছে। অসাধারণ প্র্যাকটিক্যাল ল্যাব সেশন!"</p>
-                        <div class="review-user">- রাফসান শেখ বাগ বাউন্টি হান্টার)</div>
+                        <div class="review-user">- রাফসান শেখ (বাগ বাউন্টি হান্টার)</div>
                     </div>
                 </div>
                 <div class="review-card">
@@ -175,7 +180,6 @@
         </section>
     </div>
 
-    <!-- Modal Popup -->
     <div id="modal" class="modal">
         <div class="modal-content" id="modalBody"></div>
     </div>
@@ -184,24 +188,43 @@
 
     <script>
         const defaultCourses = [
-            { id: '1', title: 'কমপ্লিট ইথিক্যাল হ্যাকিং মাস্টারক্লাস (জিরো টু হিরো)', category: 'Ethical Hacking', tag: 'বেস্ট সেলার', price: 2500, rating: '4.9', desc: 'শূন্য থেকে প্রফেশনাল ইথিক্যাল হ্যাকিং শিখুন সম্পূর্ণ প্র্যাকটিক্যাল ল্যাবের সাথে।', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500' },
-            { id: '2', title: 'ওয়েব পেনিট্রেশন টেস্টিং ও বাগ বাউন্টি হান্টিং', category: 'Web Security', tag: 'জনপ্রিয়', price: 3000, rating: '4.8', desc: 'ওয়েব অ্যাপ্লিকেশনের নিরাপত্তা ত্রুটি খুঁজে বের করুন এবং বাগ বাউন্টি মার্কেটপ্লেসে কাজ শুরু করুন।', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500' },
-            { id: '3', title: 'নেটওয়ার্ক সিকিউরিটি ও ফায়ারওয়াল ফান্ডামেন্টালস', category: 'Network', tag: 'প্রফেশনাল', price: 2000, rating: '4.7', desc: 'কোম্পানির নেটওয়ার্ক সিকিউরিটি, ফায়ারওয়াল কনফিগারেশন এবং অডিটিং শিখুন।', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500' },
-            { id: '4', title: 'ডিজিটাল ফরেনসিক ও সাইবার ক্রাইম ইনভেস্টিগেশন', category: 'Ethical Hacking', tag: 'অ্যাডভান্সড', price: 3500, rating: '4.9', desc: 'সাইবার অপরাধ তদন্ত, এভিডেন্স কালেকশন এবং ডিজিটাল ফরেনসিক এনালাইসিস শিখুন।', image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500' },
-            { id: '5', title: 'পাইথন ফর সাইবার সিকিউরিটি ও অটোমেশন', category: 'Web Security', tag: 'নতুন', price: 2200, rating: '4.8', desc: 'পাইথন দিয়ে নিজস্ব হ্যাকিং টুলস, স্ক্রিপ্ট এবং সিকিউরিটি অটোমেশন তৈরি করা শিখুন।', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=500' },
-            { id: '6', title: 'লিনাক্স সিস্টেম অ্যাডমিনিস্ট্রেশন ও সিকিউরিটি', category: 'Network', tag: 'জরুরি', price: 1800, rating: '4.6', desc: 'লিনাক্স সার্ভার সেটআপ, হার্ডেনিং এবং সাইবার ডিফেন্স টেকনিক শিখুন।', image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=500' }
+            { 
+                id: '1', title: 'কমপ্লিট ইথিক্যাল হ্যাকিং মাস্টারক্লাস (জিরো টু হিরো)', category: 'Ethical Hacking', tag: 'বেস্ট সেলার', price: 2500, rating: '4.9', 
+                desc: 'শূন্য থেকে প্রফেশনাল ইথিক্যাল হ্যাকিং শিখুন সম্পূর্ণ প্র্যাকটিক্যাল ল্যাবের সাথে।', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500',
+                videos: [
+                    { title: 'Class 01: Introduction to Cyber Security', url: 'https://www.youtube.com/embed/b13b7yX2a30' },
+                    { title: 'Class 02: Setting Up Kali Linux Lab', url: 'https://www.youtube.com/embed/d3_1A3q2K8Y' },
+                    { title: 'Class 03: Basic Linux Commands for Hacking', url: 'https://www.youtube.com/embed/lZAoFs75_cs' }
+                ]
+            },
+            { 
+                id: '2', title: 'ওয়েব পেনিট্রেশন টেস্টিং ও বাগ বাউন্টি হান্টিং', category: 'Web Security', tag: 'জনপ্রিয়', price: 3000, rating: '4.8', 
+                desc: 'ওয়েব অ্যাপ্লিকেশনের নিরাপত্তা ত্রুটি খুঁজে বের করুন এবং বাগ বাউন্টি মার্কেটপ্লেসে কাজ শুরু করুন।', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500',
+                videos: [
+                    { title: 'Class 01: How Web Applications Work', url: 'https://www.youtube.com/embed/4SpE8fT1kO0' },
+                    { title: 'Class 02: Burp Suite Setup & Fundamentals', url: 'https://www.youtube.com/embed/WJ84b3qXp40' }
+                ]
+            },
+            { 
+                id: '3', title: 'নেটওয়ার্ক সিকিউরিটি ও ফায়ারওয়াল ফান্ডামেন্টালস', category: 'Network', tag: 'প্রফেশনাল', price: 2000, rating: '4.7', 
+                desc: 'কোম্পানির নেটওয়ার্ক সিকিউরিটি, ফায়ারওয়াল কনফিগারেশন এবং অডিটিং শিখুন।', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500',
+                videos: [{ title: 'Class 01: Network Basics & OSI Model', url: 'https://www.youtube.com/embed/3QnE1kY5s10' }]
+            },
+            { id: '4', title: 'ডিজিটাল ফরেনসিক ও সাইবার ক্রাইম ইনভেস্টিগেশন', category: 'Ethical Hacking', tag: 'অ্যাডভান্সড', price: 3500, rating: '4.9', desc: 'সাইবার অপরাধ তদন্ত, এভিডেন্স কালেকশন এবং ডিজিটাল ফরেনসিক এনালাইসিস শিখুন।', image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500', videos: [{ title: 'Class 01: Digital Forensics Intro', url: 'https://www.youtube.com/embed/b13b7yX2a30' }] },
+            { id: '5', title: 'পাইথন ফর সাইবার সিকিউরিটি ও অটোমেশন', category: 'Web Security', tag: 'নতুন', price: 2200, rating: '4.8', desc: 'পাইথন দিয়ে নিজস্ব হ্যাকিং টুলস, স্ক্রিপ্ট এবং সিকিউরিটি অটোমেশন তৈরি করা শিখুন।', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=500', videos: [{ title: 'Class 01: Python Security Automation', url: 'https://www.youtube.com/embed/b13b7yX2a30' }] },
+            { id: '6', title: 'লিনাক্স সিস্টেম অ্যাডমিনিস্ট্রেশন ও সিকিউরিটি', category: 'Network', tag: 'জরুরি', price: 1800, rating: '4.6', desc: 'লিনাক্স সার্ভার সেটআপ, হার্ডেনিং এবং সাইবার ডিফেন্স টেকনিক শিখুন।', image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=500', videos: [{ title: 'Class 01: Linux Security Basics', url: 'https://www.youtube.com/embed/b13b7yX2a30' }] }
         ];
 
-        let courses = JSON.parse(localStorage.getItem('csa_secure_v1_courses')) || defaultCourses;
-        let users = JSON.parse(localStorage.getItem('csa_secure_v1_users')) || [];
-        let currentUser = JSON.parse(localStorage.getItem('csa_secure_v1_user')) || null;
-        let payments = JSON.parse(localStorage.getItem('csa_secure_v1_payments')) || [];
+        let courses = JSON.parse(localStorage.getItem('csa_v12_courses')) || defaultCourses;
+        let users = JSON.parse(localStorage.getItem('csa_v12_users')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('csa_v12_user')) || null;
+        let payments = JSON.parse(localStorage.getItem('csa_v12_payments')) || [];
 
         function renderAuth() {
             const container = document.getElementById('authContainer');
             if (currentUser) {
                 container.innerHTML = `
-                    <button class="btn btn-outline" onclick="openStudentModal()">🎓 ড্যাশবোর্ড (${currentUser.name})</button>
+                    <button class="btn btn-outline" onclick="openStudentModal()">🎓 লার্নিং ড্যাশবোর্ড (${currentUser.name})</button>
                     <button class="btn btn-outline" style="border-color:#ef4444; color:#ef4444;" onclick="logout()">লগআউট</button>
                 `;
             } else {
@@ -245,6 +268,7 @@
 
         /* Auth Modals */
         function openLoginModal() {
+            document.getElementById('modalContentBox').className = 'modal-content';
             document.getElementById('modalBody').innerHTML = `
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <h3 style="margin-bottom:1.2rem; color:var(--cyber-green);">🔑 স্টুডেন্ট লগইন</h3>
@@ -258,6 +282,7 @@
         }
 
         function openRegisterModal() {
+            document.getElementById('modalContentBox').className = 'modal-content';
             document.getElementById('modalBody').innerHTML = `
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <h3 style="margin-bottom:1.2rem; color:var(--cyber-green);">📝 নতুন অ্যাকাউন্ট খুলুন (সাইন আপ)</h3>
@@ -277,19 +302,16 @@
             const user = document.getElementById('rUser').value.trim();
             const pass = document.getElementById('rPass').value;
 
-            if (users.find(u => u.user === user)) {
-                alert("এই ইমেইল বা নম্বর দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে!");
-                return;
-            }
+            if (users.find(u => u.user === user)) return alert("এই ইমেইল বা নম্বর দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে!");
             
             const newUser = { name, user, pass };
             users.push(newUser);
             currentUser = newUser;
-            localStorage.setItem('csa_secure_v1_users', JSON.stringify(users));
-            localStorage.setItem('csa_secure_v1_user', JSON.stringify(currentUser));
+            localStorage.setItem('csa_v12_users', JSON.stringify(users));
+            localStorage.setItem('csa_v12_user', JSON.stringify(currentUser));
             closeModal();
             renderAuth();
-            alert(`স্বাগতম ${name}! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।`);
+            alert(`স্বাগতম ${name}! আপনার অ্যাকাউন্ট তৈরি হয়েছে।`);
         }
 
         function handleLogin(e) {
@@ -300,23 +322,22 @@
             const found = users.find(u => u.user === user && u.pass === pass);
             if (found) {
                 currentUser = found;
-                localStorage.setItem('csa_secure_v1_user', JSON.stringify(currentUser));
+                localStorage.setItem('csa_v12_user', JSON.stringify(currentUser));
                 closeModal();
                 renderAuth();
                 alert(`স্বাগতম ব্যাক, ${found.name}!`);
             } else {
-                alert("ইমেইল/ফোন অথবা পাসওয়ার্ড ভুল হয়েছে! সঠিক তথ্য দিয়ে লগইন করুন।");
+                alert("ইমেইল/ফোন অথবা পাসওয়ার্ড ভুল হয়েছে!");
             }
         }
 
         function logout() {
             currentUser = null;
-            localStorage.removeItem('csa_secure_v1_user');
+            localStorage.removeItem('csa_v12_user');
             renderAuth();
-            alert("সফলভাবে লগআউট করা হয়েছে।");
         }
 
-        /* Admin Management (Hidden for students) */
+        /* Admin Management */
         function openAdminModal() {
             const pass = prompt("এডমিন পাসওয়ার্ড দিন:");
             if (pass !== "admin123") {
@@ -325,10 +346,10 @@
             }
             
             const pending = payments.filter(p => p.status === 'Pending');
-
+            document.getElementById('modalContentBox').className = 'modal-content';
             document.getElementById('modalBody').innerHTML = `
                 <span class="close-btn" onclick="closeModal()">&times;</span>
-                <h3 style="margin-bottom:1rem; color:var(--cyber-cyan);">🛡️ এডমিন প্যানেল</h3>
+                <h3 style="margin-bottom:1rem; color:var(--cyber-cyan);">🛡️ এডমিন কন্ট্রোল প্যানেল</h3>
                 
                 <div style="margin-bottom:1.5rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem;">
                     <h4 style="margin-bottom:0.8rem; font-size:0.95rem; color:var(--cyber-green);">➕ নতুন কোর্স যোগ করুন</h4>
@@ -350,7 +371,7 @@
 
                 <div>
                     <h4 style="margin-bottom:0.8rem; font-size:0.95rem; color:var(--cyber-cyan);">💳 পেন্ডিং পেমেন্ট অ্যাপ্রুভাল (${pending.length})</h4>
-                    ${pending.length === 0 ? '<p style="color:var(--text-muted); font-size:0.85rem;">কোনো পেন্ডিং পেমেন্ট রিকোয়েস্ট নেই।</p>' :
+                    ${pending.length === 0 ? '<p style="color:var(--text-muted); font-size:0.85rem;">কোনো পেন্ডিং রিকোয়েস্ট নেই।</p>' :
                         pending.map(p => `
                             <div style="background:var(--bg-dark); padding:0.8rem; border-radius:6px; margin-bottom:0.5rem; font-size:0.85rem; border:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
                                 <div><b>${p.userName}</b><br><small style="color:var(--text-muted);">${p.courseTitle}</small><br>TrxID: <strong style="color:var(--cyber-cyan);">${p.trx}</strong></div>
@@ -372,32 +393,34 @@
                 price: Number(document.getElementById('aPrice').value),
                 rating: '5.0',
                 image: document.getElementById('aImg').value,
-                desc: document.getElementById('aDesc').value
+                desc: document.getElementById('aDesc').value,
+                videos: [{ title: 'Class 01: Welcome to Course', url: 'https://www.youtube.com/embed/b13b7yX2a30' }]
             };
             courses.unshift(newC);
-            localStorage.setItem('csa_secure_v1_courses', JSON.stringify(courses));
+            localStorage.setItem('csa_v12_courses', JSON.stringify(courses));
             renderCourses();
             closeModal();
-            alert("কোর্সটি সফলভাবে ওয়েবসাইটে পাবলিশ হয়েছে!");
+            alert("কোর্সটি সফলভাবে পাবলিশ হয়েছে!");
         }
 
         function approvePayment(id) {
             const p = payments.find(item => item.id === id);
             if (p) {
                 p.status = 'Approved';
-                localStorage.setItem('csa_secure_v1_payments', JSON.stringify(payments));
-                alert("পেমেন্ট অ্যাপ্রুভ হয়েছে! শিক্ষার্থীর ড্যাশবোর্ডে কোর্সটি চালু হয়ে গেছে।");
+                localStorage.setItem('csa_v12_payments', JSON.stringify(payments));
+                alert("পেমেন্ট অ্যাপ্রুভ হয়েছে! স্টুডেন্ট এখন ভিডিও দেখতে পারবে।");
                 openAdminModal();
             }
         }
 
-        /* Enrollment & Student Dashboard */
+        /* Enrollment & Course Purchase */
         function buyCourse(id) {
             if (!currentUser) {
                 alert("কোর্স কিনতে প্রথমে লগইন বা সাইন-আপ করুন!");
                 return openLoginModal();
             }
             const c = courses.find(item => item.id === id);
+            document.getElementById('modalContentBox').className = 'modal-content';
             document.getElementById('modalBody').innerHTML = `
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <h3>এনরোল করুন - ${c.title}</h3>
@@ -430,30 +453,78 @@
                 status: 'Pending',
                 date: new Date().toLocaleDateString('bn-BD')
             });
-            localStorage.setItem('csa_secure_v1_payments', JSON.stringify(payments));
+            localStorage.setItem('csa_v12_payments', JSON.stringify(payments));
             closeModal();
-            alert(`ধন্যবাদ ${currentUser.name}! আপনার পেমেন্ট সাবমিট হয়েছে। এডমিন যাচাই করে আপনার ড্যাশবোর্ডে কোর্সটি অ্যাক্টিভ করে দেবেন।`);
+            alert(`ধন্যবাদ ${currentUser.name}! পেমেন্ট সাবমিট হয়েছে। এডমিন ভেরিফাই করলে আপনার ড্যাশবোর্ডে ক্লাসের ভিডিও দেখতে পারবেন।`);
         }
 
+        /* Real Learning Student Dashboard with Video Player */
         function openStudentModal() {
             if(!currentUser) return openLoginModal();
             const approved = payments.filter(p => p.user === currentUser.user && p.status === 'Approved');
             const pending = payments.filter(p => p.user === currentUser.user && p.status === 'Pending');
 
+            document.getElementById('modalContentBox').className = 'modal-content modal-large';
             document.getElementById('modalBody').innerHTML = `
                 <span class="close-btn" onclick="closeModal()">&times;</span>
-                <h3 style="margin-bottom:1rem; color:var(--cyber-green);">🎓 স্টুডেন্ট ড্যাশবোর্ড</h3>
-                <p style="color:var(--text-muted); margin-bottom:1rem; font-size:0.9rem;">শিক্ষার্থী: ${currentUser.name}</p>
+                <h3 style="margin-bottom:0.5rem; color:var(--cyber-green);">🎓 স্টুডেন্ট লার্নিং পোর্টাল</h3>
+                <p style="color:var(--text-muted); margin-bottom:1.5rem; font-size:0.9rem;">শিক্ষার্থী: ${currentUser.name}</p>
                 
-                <h4 style="margin-bottom:0.5rem; font-size:0.95rem; color:var(--cyber-green);">অ্যাক্টিভ কোর্সসমূহ (${approved.length}):</h4>
-                ${approved.length === 0 ? '<p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">আপনার কোনো অ্যাক্টিভ কোর্স নেই।</p>' : 
-                    approved.map(m => `<div style="background:var(--bg-dark); padding:0.8rem; border-radius:6px; margin-bottom:0.5rem; border:1px solid var(--border-color);"><strong>${m.courseTitle}</strong><br><small style="color:var(--cyber-green);">স্ট্যাটাস: অ্যাক্টিভ ও সচল</small></div>`).join('')}
+                <h4 style="margin-bottom:0.8rem; font-size:1rem; color:var(--cyber-cyan);">আমার এনরোল করা কোর্সসমূহ (${approved.length}):</h4>
+                
+                ${approved.length === 0 ? '<div style="background:var(--bg-dark); padding:1.5rem; border-radius:8px; text-align:center; color:var(--text-muted); border:1px solid var(--border-color);">আপনার কোনো অ্যাক্টিভ কোর্স নেই। কোর্স এনরোল করার পর এডমিন অ্যাপ্রুভ করলে এখানে ভিডিও প্লেয়ার আনলক হবে।</div>' : 
+                    `<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+                        ${approved.map(m => `
+                            <div style="background:var(--bg-dark); padding:1rem; border-radius:8px; border:1px solid var(--cyber-green);">
+                                <h5 style="margin-bottom:0.5rem; font-size:0.95rem;">${m.courseTitle}</h5>
+                                <button class="btn btn-primary" style="width:100%; font-size:0.8rem; margin-top:0.5rem;" onclick="playCourseVideos('${m.courseId}')">▶️ ক্লাস শুরু করুন</button>
+                            </div>
+                        `).join('')}
+                    </div>`
+                }
+
+                <div id="videoPlayerSection" style="display:none; margin-top:1.5rem; border-top:1px solid var(--border-color); padding-top:1.2rem;"></div>
 
                 ${pending.length > 0 ? `
-                    <h4 style="margin:1rem 0 0.5rem; font-size:0.95rem; color:#ffb703;">পেন্ডিং অ্যাপ্রুভাল (${pending.length}):</h4>${pending.map(m => `<div style="background:var(--bg-dark); padding:0.8rem; border-radius:6px; margin-bottom:0.5rem; border:1px solid var(--border-color);"><strong>${m.courseTitle}</strong><br><small style="color:var(--text-muted);">TrxID: ${m.trx} (এডমিন ভেরিফিকেশন চলছে)</small></div>`).join('')}
+                    <h4 style="margin:1.5rem 0 0.5rem; font-size:0.95rem; color:#ffb703;">পেন্ডিং অ্যাপ্রুভাল (${pending.length}):</h4>${pending.map(m => `<div style="background:var(--bg-dark); padding:0.8rem; border-radius:6px; margin-bottom:0.5rem; border:1px solid var(--border-color); font-size:0.85rem;"><strong>${m.courseTitle}</strong><br><small style="color:var(--text-muted);">TrxID: ${m.trx} (ভেরিফিকেশন চলছে)</small></div>`).join('')}
                 ` : ''}
             `;
             document.getElementById('modal').style.display = 'flex';
+        }
+
+        function playCourseVideos(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            const playerSection = document.getElementById('videoPlayerSection');
+            if(!course || !course.videos || course.videos.length === 0) {
+                playerSection.style.display = 'block';
+                playerSection.innerHTML = `<p style="color:var(--danger);">এই কোর্সের ক্লাস কনটেন্ট জলদি আপলোড করা হবে।</p>`;
+                return;
+            }
+
+            const firstVid = course.videos[0];
+            playerSection.style.display = 'block';
+            playerSection.innerHTML = `
+                <h4 style="color:var(--cyber-green); margin-bottom:0.8rem;">🎬 ${course.title} - লেকচার প্লেয়ার</h4>
+                <div class="player-layout">
+                    <div class="video-box">
+                        <iframe id="mainVideoFrame" src="${firstVid.url}" allowfullscreen></iframe>
+                    </div>
+                    <div class="lesson-list">
+                        <strong style="display:block; margin-bottom:0.6rem; font-size:0.85rem; color:var(--cyber-cyan);">ক্লাস মডিউল:</strong>
+                        ${course.videos.map((v, i) => `
+                            <div class="lesson-item ${i === 0 ? 'active' : ''}" onclick="changeVideo('${v.url}', this)">
+                                <span>${v.title}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function changeVideo(url, el) {
+            document.getElementById('mainVideoFrame').src = url;
+            document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
         }
 
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
@@ -462,5 +533,12 @@
         renderAuth();
         renderCourses();
     </script>
+
+    <!-- Modal Box HTML Structure Fix -->
+    <div id="modal" class="modal">
+        <div class="modal-content" id="modalContentBox">
+            <div id="modalBody"></div>
+        </div>
+    </div>
 </body>
 </html>
