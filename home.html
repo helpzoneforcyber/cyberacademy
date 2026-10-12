@@ -22,7 +22,7 @@
         /* Navigation */
         nav { background-color: rgba(17, 24, 39, 0.98); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
-        .logo { font-size: 1.3rem; font-weight: bold; color: var(--cyber-green); cursor: pointer; text-decoration: none; }
+        .logo { font-size: 1.3rem; font-weight: bold; color: var(--cyber-green); cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; user-select: none; }
         .nav-links { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
         .nav-link { color: var(--text-main); text-decoration: none; font-weight: 500; cursor: pointer; font-size: 0.9rem; transition: color 0.3s; }
         .nav-link:hover { color: var(--cyber-green); }
@@ -30,9 +30,10 @@
         .btn { padding: 0.45rem 0.9rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
         .btn-primary { background-color: var(--cyber-green); color: #000; }
         .btn-primary:hover { box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }
-        .btn-admin { background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyber-cyan); color: var(--cyber-cyan); }
         .btn-outline { background: transparent; border: 1px solid var(--cyber-green); color: var(--cyber-green); }
         .btn-outline:hover { background: var(--cyber-green); color: #000; }
+        .secret-admin-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; opacity: 0.6; transition: 0.3s; }
+        .secret-admin-btn:hover { opacity: 1; color: var(--cyber-cyan); }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem 3rem; width: 100%; }
 
@@ -99,12 +100,12 @@
     <!-- Header Navigation -->
     <nav>
         <div class="nav-container">
-            <a class="logo" onclick="location.reload()">🛡️ সাইবার সিকিউরিটি একাডেমি BD</a>
+            <div class="logo" onclick="location.reload()">🛡️ সাইবার সিকিউরিটি একাডেমি BD</div>
             <div class="nav-links">
                 <span class="nav-link" onclick="location.reload()">হোম</span>
                 <span class="nav-link" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">কোর্সসমূহ</span>
                 <span class="nav-link" onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">রিভিউ</span>
-                <button class="btn btn-admin" onclick="openAdminModal()">+ এডমিন (কোর্স পাবলিশ)</button>
+                <button class="secret-admin-btn" onclick="openAdminModal()" title="এডমিন লগইন">🔒 এডমিন</button>
                 <div id="authContainer" style="display:inline-flex; gap:0.5rem; align-items:center;"></div>
             </div>
         </div>
@@ -159,7 +160,7 @@
                     <div class="review-content">
                         <div class="rating">★★★★★</div>
                         <p class="review-text">"ইথিক্যাল হ্যাকিং জিরো টু হিরো কোর্সটি আমার ক্যারিয়ার সম্পূর্ণ বদলে দিয়েছে। অসাধারণ প্র্যাকটিক্যাল ল্যাব সেশন!"</p>
-                        <div class="review-user">- রাফসান শেখ (বাগ বাউন্টি হান্টার)</div>
+                        <div class="review-user">- রাফসান শেখ বাগ বাউন্টি হান্টার)</div>
                     </div>
                 </div>
                 <div class="review-card">
@@ -191,10 +192,10 @@
             { id: '6', title: 'লিনাক্স সিস্টেম অ্যাডমিনিস্ট্রেশন ও সিকিউরিটি', category: 'Network', tag: 'জরুরি', price: 1800, rating: '4.6', desc: 'লিনাক্স সার্ভার সেটআপ, হার্ডেনিং এবং সাইবার ডিফেন্স টেকনিক শিখুন।', image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=500' }
         ];
 
-        let courses = JSON.parse(localStorage.getItem('csa_final_v5_courses')) || defaultCourses;
-        let users = JSON.parse(localStorage.getItem('csa_final_v5_users')) || [];
-        let currentUser = JSON.parse(localStorage.getItem('csa_final_v5_user')) || null;
-        let payments = JSON.parse(localStorage.getItem('csa_final_v5_payments')) || [];
+        let courses = JSON.parse(localStorage.getItem('csa_secure_v1_courses')) || defaultCourses;
+        let users = JSON.parse(localStorage.getItem('csa_secure_v1_users')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('csa_secure_v1_user')) || null;
+        let payments = JSON.parse(localStorage.getItem('csa_secure_v1_payments')) || [];
 
         function renderAuth() {
             const container = document.getElementById('authContainer');
@@ -272,45 +273,50 @@
 
         function handleRegister(e) {
             e.preventDefault();
-            const name = document.getElementById('rName').value;
-            const user = document.getElementById('rUser').value;
+            const name = document.getElementById('rName').value.trim();
+            const user = document.getElementById('rUser').value.trim();
             const pass = document.getElementById('rPass').value;
 
-            if (users.find(u => u.user === user)) return alert("এই ইমেইল বা নম্বর দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে!");
+            if (users.find(u => u.user === user)) {
+                alert("এই ইমেইল বা নম্বর দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে!");
+                return;
+            }
             
             const newUser = { name, user, pass };
             users.push(newUser);
             currentUser = newUser;
-            localStorage.setItem('csa_final_v5_users', JSON.stringify(users));
-            localStorage.setItem('csa_final_v5_user', JSON.stringify(currentUser));
+            localStorage.setItem('csa_secure_v1_users', JSON.stringify(users));
+            localStorage.setItem('csa_secure_v1_user', JSON.stringify(currentUser));
             closeModal();
             renderAuth();
-            alert(`স্বাগতম ${name}! অ্যাকাউন্ট তৈরি সফল হয়েছে।`);
+            alert(`স্বাগতম ${name}! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।`);
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('lUser').value;
+            const user = document.getElementById('lUser').value.trim();
             const pass = document.getElementById('lPass').value;
+            
             const found = users.find(u => u.user === user && u.pass === pass);
             if (found) {
                 currentUser = found;
-                localStorage.setItem('csa_final_v5_user', JSON.stringify(currentUser));
+                localStorage.setItem('csa_secure_v1_user', JSON.stringify(currentUser));
                 closeModal();
                 renderAuth();
-                alert(`স্বাগতম, ${found.name}!`);
+                alert(`স্বাগতম ব্যাক, ${found.name}!`);
             } else {
-                alert("ইমেইল/ফোন অথবা পাসওয়ার্ড ভুল হয়েছে!");
+                alert("ইমেইল/ফোন অথবা পাসওয়ার্ড ভুল হয়েছে! সঠিক তথ্য দিয়ে লগইন করুন।");
             }
         }
 
         function logout() {
             currentUser = null;
-            localStorage.removeItem('csa_final_v5_user');
+            localStorage.removeItem('csa_secure_v1_user');
             renderAuth();
+            alert("সফলভাবে লগআউট করা হয়েছে।");
         }
 
-        /* Admin Management */
+        /* Admin Management (Hidden for students) */
         function openAdminModal() {
             const pass = prompt("এডমিন পাসওয়ার্ড দিন:");
             if (pass !== "admin123") {
@@ -369,7 +375,7 @@
                 desc: document.getElementById('aDesc').value
             };
             courses.unshift(newC);
-            localStorage.setItem('csa_final_v5_courses', JSON.stringify(courses));
+            localStorage.setItem('csa_secure_v1_courses', JSON.stringify(courses));
             renderCourses();
             closeModal();
             alert("কোর্সটি সফলভাবে ওয়েবসাইটে পাবলিশ হয়েছে!");
@@ -379,9 +385,9 @@
             const p = payments.find(item => item.id === id);
             if (p) {
                 p.status = 'Approved';
-                localStorage.setItem('csa_final_v5_payments', JSON.stringify(payments));
+                localStorage.setItem('csa_secure_v1_payments', JSON.stringify(payments));
                 alert("পেমেন্ট অ্যাপ্রুভ হয়েছে! শিক্ষার্থীর ড্যাশবোর্ডে কোর্সটি চালু হয়ে গেছে।");
-                closeModal();
+                openAdminModal();
             }
         }
 
@@ -413,7 +419,7 @@
 
         function confirmEnroll(e, courseId, title) {
             e.preventDefault();
-            const trx = document.getElementById('trxId').value;
+            const trx = document.getElementById('trxId').value.trim();
             payments.push({
                 id: Date.now(),
                 user: currentUser.user,
@@ -424,7 +430,7 @@
                 status: 'Pending',
                 date: new Date().toLocaleDateString('bn-BD')
             });
-            localStorage.setItem('csa_final_v5_payments', JSON.stringify(payments));
+            localStorage.setItem('csa_secure_v1_payments', JSON.stringify(payments));
             closeModal();
             alert(`ধন্যবাদ ${currentUser.name}! আপনার পেমেন্ট সাবমিট হয়েছে। এডমিন যাচাই করে আপনার ড্যাশবোর্ডে কোর্সটি অ্যাক্টিভ করে দেবেন।`);
         }
