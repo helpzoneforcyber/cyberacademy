@@ -17,6 +17,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
         
+        /* Navbar */
         nav { background-color: var(--bg-card); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 50; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .logo { display: flex; align-items: center; gap: 6px; font-size: 1.15rem; font-weight: bold; color: white; cursor: pointer; }
@@ -29,10 +30,12 @@
         .search-input-nav { padding: 6px 12px; background: var(--bg-dark); border: 1px solid #374151; border-radius: 6px; color: white; font-size: 0.8rem; outline: none; }
         .search-input-nav:focus { border-color: var(--cyber-green); }
 
+        /* Buttons */
         .btn-login { background: #1f2937; border: 1px solid #374151; color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
         .btn-dash { background: var(--cyber-green); color: var(--bg-dark); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; border: none; cursor: pointer; }
         .user-badge { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; border: 1px solid #374151; font-size: 0.8rem; }
 
+        /* Hero Section */
         main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
         .hero { background: linear-gradient(135deg, rgba(17,24,39,0.9), rgba(10,15,29,0.95)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200') center/cover; border: 1px solid var(--border-color); border-radius: 20px; padding: 3rem 1rem; text-align: center; margin-bottom: 2rem; position: relative; overflow: hidden; }
         .hero-tag { background: rgba(0,255,102,0.15); border: 1px solid rgba(0,255,102,0.3); color: var(--cyber-green); font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 1rem; font-weight: 600; }
@@ -43,23 +46,27 @@
         .hero-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
         .btn-main { background: var(--cyber-green); color: var(--bg-dark); padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
 
+        /* Dashboard UI */
         .dashboard-container { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; }
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px; }
         .dash-title { font-size: 1.3rem; font-weight: bold; color: white; }
         .dash-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
         .dash-card { background: var(--bg-dark); border: 1px solid #374151; padding: 1rem; border-radius: 10px; text-align: center; }
 
+        /* Stats Bar */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 2.5rem; }
         .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; text-align: center; }
         .stat-card h3 { font-size: 1.25rem; font-weight: 800; color: var(--cyber-green); margin-bottom: 4px; }
         .stat-card p { font-size: 0.75rem; color: var(--text-muted); }
 
+        /* Category Filter Tabs */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px; }
         .section-header h2 { font-size: 1.2rem; font-weight: bold; border-left: 4px solid var(--cyber-green); padding-left: 8px; }
         .filter-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
         .tab-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; transition: 0.3s; }
         .tab-btn.active, .tab-btn:hover { background: var(--cyber-green); color: var(--bg-dark); border-color: var(--cyber-green); font-weight: bold; }
 
+        /* Course Grid & Cards */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
         .card:hover { border-color: rgba(0,255,102,0.4); transform: translateY(-3px); }
@@ -80,6 +87,7 @@
         .btn-enroll { background: rgba(0,255,102,0.1); border: 1px solid var(--cyber-green); color: var(--cyber-green); padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-enroll:hover { background: var(--cyber-green); color: var(--bg-dark); }
 
+        /* Testimonials / Reviews Section */
         .reviews-section { margin-top: 4rem; }
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
         .review-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
@@ -91,6 +99,7 @@
         .reviewer-name { font-size: 0.9rem; font-weight: bold; color: white; }
         .reviewer-title { font-size: 0.75rem; color: var(--text-muted); }
 
+        /* Modal Popups */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
         .modal.active { display: flex; }
         .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; max-width: 450px; width: 100%; padding: 1.5rem; position: relative; max-height: 90vh; overflow-y: auto; }
@@ -186,6 +195,7 @@
 
         <div id="coursesGrid" class="grid"></div>
 
+        <!-- STUDENTS REVIEWS & OPINIONS SECTION -->
         <div id="reviewsSection" class="reviews-section">
             <div class="section-header">
                 <h2>শিক্ষার্থীদের রিভিউ ও মতামত</h2>
@@ -268,6 +278,7 @@
         <p>&copy; 2026 সাইবার সিকিউরিটি একাডেমি BD. All rights reserved.</p>
     </footer>
 
+    <!-- ENROLL & PAYMENT MODAL -->
     <div id="enrollModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('enrollModal')">&times;</button>
@@ -297,6 +308,7 @@
         </div>
     </div>
 
+    <!-- AUTH MODAL -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
@@ -323,7 +335,7 @@
     </div>
 
     <script>
-        let courses = [
+        const courses = [
             { id: 1, title: "কমপ্লিট এথিক্যাল হ্যাকিং মাস্টারক্লাস", category: "Ethical Hacking", author: "ইনস্ট্রাক্টর: ইমতিয়াজ আল হাসান", rating: "4.9", badge: "বেস্ট সেলার", price: 2500, oldPrice: 5000, image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=600", description: "অ্যাডভান্সড এথিক্যাল হ্যাকিংয়ের খুঁটিনাটি, নেটওয়ার্ক হ্যাকিং, ওয়াইফাই এবং রিয়েলওয়ার্ল্ড প্র্যাকটিক্যাল।" },
             { id: 2, title: "ওয়েব অ্যাপ্লিকেশন পেনিট্রেশন টেস্টিং", category: "Web Security", author: "ইনস্ট্রাক্টর: তানভীর আহমেদ", rating: "4.8", badge: "জনপ্রিয়", price: 3000, oldPrice: 6000, image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600", description: "OWASP Top 10 ভ্যালনারেবিলিটি যেমন SQLi, XSS, CSRF ইত্যাদি হ্যাকিং শিখুন ও রিয়েল লাইফ ফিক্স করার উপায়।" },
             { id: 3, title: "নেটওয়ার্ক ডিফেন্স অ্যান্ড সিকিউরিটি অপারেশন", category: "Networking", author: "ইনস্ট্রাক্টর: ফাহিম ফয়সাল", rating: "4.9", badge: "প্রফেশনাল", price: 2000, oldPrice: 4000, image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600", description: "ফায়ারওয়াল কনফিগারেশন, ট্রাফিক অ্যানালাইসিস এবং নেটওয়ার্ক থ্রেট ডিটেকশন ও প্রিভেনশন শিখুন।" },
@@ -340,6 +352,7 @@
 
         function renderCourses(data) {
             const grid = document.getElementById('coursesGrid');
+            if(!grid) return;
             if(data.length === 0) {
                 grid.innerHTML = <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">কোনো কোর্স পাওয়া যায়নি।</p>;
                 return;
@@ -499,7 +512,10 @@
             document.getElementById('statsSection').style.display = "grid";
         }
 
-        renderCourses(courses);
+        // Initialize courses on load
+        window.onload = function() {
+            renderCourses(courses);
+        };
     </script>
 </body>
 </html>
